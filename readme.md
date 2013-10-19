@@ -1,6 +1,6 @@
 #async-dot-cfc README
 
-- Purpose: Provides session memory storage for temporary messages and data that must be sent between requests.
+- Purpose: Easily create multi-threaded asynchronous functions with callbacks using pure CFML.
 - Version: 0.1.000
 - Language(s) used: ColdFusion Markup Language (CFML)
 - Project Home Page: Coming soon
