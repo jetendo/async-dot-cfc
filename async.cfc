@@ -59,10 +59,18 @@
 			arrayAppend(variables.arrWorkUnitQueue, arguments.workUnit);
 			return;
 		}
-		arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&session.cfid&"-"&gettickcount()&variables.threadIndex; 
+		if(variables.configStruct.enableJava){ 
+			arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&variables.threadIndex; 
+		}else{
+			arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&createuuid()&variables.threadIndex; 
+		}
 		application.globalThreadCount[variables.configStruct.threadNamePrefix][arguments.workUnit.threadName]=true;
 	}else{
-		arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&session.cfid&"-"&gettickcount()&variables.threadIndex;
+		if(variables.configStruct.enableJava){ 
+			arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&variables.threadIndex; 
+		}else{
+			arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&createuuid()&variables.threadIndex; 
+		}
 	}
 	if(variables.configStruct.enableJava){ 
 		variables.threadIndex=variables.atomicInteger.incrementAndGet();
