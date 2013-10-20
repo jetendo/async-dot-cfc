@@ -9,7 +9,8 @@
 		threadNamePrefix: 'asyncThread',
 		enableGlobalThreadLimit: true,
 		maxThreads: 8,
-		debug: false
+		debug: false,
+		enableJava: false
 	}, false);
 	if(variables.configStruct.enableGlobalThreadLimit){
 		if(not structkeyexists(application, 'globalThreadCount')){
@@ -23,7 +24,12 @@
 	// application.globalThreadCount[variables.configStruct.threadNamePrefix]={};
 	
 	variables.groupIndex=1;
-	variables.threadIndex=1;
+	if(variables.configStruct.enableJava){ 
+		variables.atomicInteger=createObject( "java", "java.util.concurrent.atomic.AtomicInteger" ).init();
+		variables.threadIndex =variables.atomicInteger.incrementAndGet();
+	}else{
+		variables.threadIndex=1;
+	}
 	variables.arrWorkUnitQueue=[];
 	variables.arrWorkUnit=[];
 	variables.groupStruct={};
@@ -53,11 +59,14 @@
 			arrayAppend(variables.arrWorkUnitQueue, arguments.workUnit);
 			return;
 		}
-		arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&variables.threadIndex; 
-		variables.threadIndex++;
+		arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&session.cfid&"-"&gettickcount()&variables.threadIndex; 
 		application.globalThreadCount[variables.configStruct.threadNamePrefix][arguments.workUnit.threadName]=true;
 	}else{
-		arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&variables.threadIndex;
+		arguments.workUnit.threadName=variables.configStruct.threadNamePrefix&session.cfid&"-"&gettickcount()&variables.threadIndex;
+	}
+	if(variables.configStruct.enableJava){ 
+		variables.threadIndex=variables.atomicInteger.incrementAndGet();
+	}else{
 		variables.threadIndex++;
 	}
 	arrayAppend(variables.arrWorkUnit, arguments.workUnit);
