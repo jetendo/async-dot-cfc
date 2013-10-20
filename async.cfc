@@ -43,7 +43,7 @@
 	<cfargument name="workMethod" type="string" required="yes">
 	<cfargument name="callbackInstance" type="component" required="no">
 	<cfargument name="callbackMethod" type="string" required="no">
-	<cfargument name="data" type="struct" required="no" default="#{}#">
+	<cfargument name="data" type="struct" required="no" default="#{}#" hint="Warning: all threads will share this data if you don't pass in separate structs for each work unit.">
 	<cfscript>
 	arguments.groupId=0;
 	return arguments;
