@@ -11,16 +11,15 @@
 		enableJava: false
 	}
 	var asyncInstance=createobject("component", "async").init(asyncInitStruct);
-	var exampleInstance=createobject("component", "example");
 	
 	// create many workUnits to be executed together as a group
 	var arrWorkUnit=[];
 	// this will add all numbers between 1 and 100 together and output the total
 	for(var i=1;i LTE 100;i++){
 		var data={ "test": i };
-		arrayAppend(arrWorkUnit, asyncInstance.createWorkUnit(exampleInstance, "workMethod", exampleInstance, "callbackMethod", data));
+		arrayAppend(arrWorkUnit, asyncInstance.createWorkUnit(this, "workMethod", this, "callbackMethod", data));
 	}
-	asyncInstance.executeWorkUnitGroup(arrWorkUnit, exampleInstance, "groupCallbackMethod");
+	asyncInstance.executeWorkUnitGroup(arrWorkUnit, this, "groupCallbackMethod");
 	while(asyncInstance.hasWork()){
 		// do other work
 		sleep(1); // wait for 1 millisecond before polling again

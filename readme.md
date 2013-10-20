@@ -13,7 +13,7 @@ Download the project and place the cfc files in a web site that has CFML configu
 
 ## Compatibility
 
-async-dot-cfc has been tested with current stable versions of Railo 4.1.
+async-dot-cfc has been tested with current stable version of Railo 4.1.
 
 ## License
 
